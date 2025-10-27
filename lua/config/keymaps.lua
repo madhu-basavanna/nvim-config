@@ -24,3 +24,18 @@ end, { desc = "Quit Neovim" })
 keymap({ "n", "i" }, "<C-w>", function()
 	vim.cmd("wq")
 end, { desc = "Save and quit" })
+
+-- Basic buffer close
+keymap("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete buffer" })
+keymap("n", "<leader>bD", "<cmd>bd!<cr>", { desc = "Force delete buffer" })
+
+-- Close buffer but keep window (open alternate file)
+keymap("n", "<leader>bq", "<cmd>bp|bd #<cr>", { desc = "Close buffer keep window" })
+
+-- Stay in visual mode after indent
+keymap("v", ">", ">gv", { desc = "Indent right and reselect" })
+keymap("v", "<", "<gv", { desc = "Indent left and reselect" })
+
+-- Tab/shift-tab for indenting in visual mode
+keymap("v", "<Tab>", ">gv", { desc = "Indent right" })
+keymap("v", "<S-Tab>", "<gv", { desc = "Indent left" })
