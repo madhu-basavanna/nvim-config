@@ -10,20 +10,18 @@ keymap("n", "<leader>cf", function()
 	})
 end, { desc = "Format current file" })
 
--- Save functionality
-keymap({ "n", "i" }, "<C-s>", function()
-	vim.cmd("w")
-end, { desc = "Save file" })
+-- Duplicated key maps for save write and quit since alacritty reads Alt as Esc
+-- Alt+s → Save
+keymap({ "n", "i" }, "<Esc>s", "<Cmd>w<CR>", { desc = "Save file" })
+keymap({ "n", "i" }, "<A-s>", "<Cmd>w<CR>")
 
--- Quit functionality
-keymap({ "n", "i" }, "<C-q>", function()
-	vim.cmd("q")
-end, { desc = "Quit Neovim" })
+-- Alt+q → Quit
+keymap({ "n", "i" }, "<Esc>q", "<Cmd>q<CR>", { desc = "Quit Neovim" })
+keymap({ "n", "i" }, "<A-q>", "<Cmd>q<CR>")
 
--- Save and quit
-keymap({ "n", "i" }, "<C-w>", function()
-	vim.cmd("wq")
-end, { desc = "Save and quit" })
+-- Alt+w → Save + Quit
+keymap({ "n", "i" }, "<Esc>w", "<Cmd>wq<CR>", { desc = "Save and quit" })
+keymap({ "n", "i" }, "<A-w>", "<Cmd>wq<CR>")
 
 -- Basic buffer close
 keymap("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Delete buffer" })
