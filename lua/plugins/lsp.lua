@@ -205,8 +205,6 @@ return {
 			-- bashls = {},
 			marksman = {},
 			-- clangd = {},
-			-- gopls = {},
-			-- pyright = {},
 			-- rust_analyzer = {},
 			-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 			--
@@ -214,24 +212,19 @@ return {
 			--    https://github.com/pmizio/typescript-tools.nvim
 			--
 			-- But for many setups, the LSP (`ts_ls`) will work just fine
-			-- ts_ls = {},
 			--
-			pylsp = {
-				settings = {
-					pylsp = {
-						plugins = {
-							pyflakes = { enabled = false },
-							pycodestyle = { enabled = false },
-							autopep8 = { enabled = false },
-							yapf = { enabled = false },
-							mccabe = { enabled = false },
-							pylsp_mypy = { enabled = false },
-							pylsp_black = { enabled = false },
-							pylsp_isort = { enabled = false },
-						},
-					},
-				},
+			pyrefly = {
+				-- example of how to run `uv` installed Pyrefly without adding to your path
+				cmd = { "uvx", "pyrefly", "lsp" },
 			},
+
+			-- ty = {
+			-- 	settings = {
+			-- 		ty = {
+			-- 			-- ty language server settings go here
+			-- 		},
+			-- 	},
+			-- },
 
 			lua_ls = {
 				-- cmd = { ... },
@@ -266,6 +259,7 @@ return {
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
 			"ruff", -- Used to format python code
+			"pyrefly", -- LSP for python
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
