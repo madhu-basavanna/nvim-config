@@ -51,5 +51,10 @@ vim.opt.scrolloff = 5
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
+	vim.opt.clipboard = "unnamedplus"
 end)
+
+-- LSP Server to use for Python.
+vim.g.lazyvim_python_lsp = "pyrefly"
+-- Set to "ruff_lsp" to use the old LSP implementation version.
+vim.g.lazyvim_python_ruff = "ruff"

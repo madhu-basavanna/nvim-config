@@ -9,10 +9,12 @@ return {
 		explorer = { enabled = true },
 		indent = { enabled = true },
 		input = { enabled = true },
+		lazygit = { enabled = true },
 		notifier = {
 			enabled = true,
 			timeout = 3000,
 		},
+		terminal = { enabled = true },
 		picker = { enabled = true },
 		quickfile = { enabled = true },
 		scope = { enabled = true },
