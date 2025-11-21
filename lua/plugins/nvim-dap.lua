@@ -17,7 +17,8 @@ return {
 				commented = true, -- Show virtual text alongside comment
 			})
 
-			dap_python.setup("python3")
+			local mason_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+			dap_python.setup(mason_path)
 
 			vim.fn.sign_define("DapBreakpoint", {
 				text = "",
