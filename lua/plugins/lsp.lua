@@ -217,15 +217,6 @@ return {
 				-- example of how to run `uv` installed Pyrefly without adding to your path
 				cmd = { "uvx", "pyrefly", "lsp" },
 			},
-
-			-- ty = {
-			-- 	settings = {
-			-- 		ty = {
-			-- 			-- ty language server settings go here
-			-- 		},
-			-- 	},
-			-- },
-
 			lua_ls = {
 				-- cmd = { ... },
 				-- filetypes = { ... },
