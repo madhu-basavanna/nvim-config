@@ -11,6 +11,11 @@ return {
 			options = {
 				picker = "snacks", -- Use snacks picker
 				notify_user_on_venv_activation = true,
+				picker_options = {
+					snacks = {
+						layout = { preset = "select" },
+					},
+				},
 			},
 		},
 	},
