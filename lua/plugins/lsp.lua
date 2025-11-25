@@ -251,6 +251,7 @@ return {
 			"stylua", -- Used to format Lua code
 			"ruff", -- Used to format python code
 			"pyrefly", -- LSP for python
+			"debugpy", -- Python debugger
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
