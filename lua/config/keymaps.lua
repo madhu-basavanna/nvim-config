@@ -37,3 +37,58 @@ keymap("v", "<", "<gv", { desc = "Indent left and reselect" })
 -- Tab/shift-tab for indenting in visual mode
 keymap("v", "<Tab>", ">gv", { desc = "Indent right" })
 keymap("v", "<S-Tab>", "<gv", { desc = "Indent left" })
+
+-- Visual mode: Search and replace selected text
+keymap("v", "<leader>r", function()
+	-- Yank the selected text
+	vim.cmd('noau normal! "vy"')
+	local selected = vim.fn.getreg("v")
+	-- Escape special characters for search pattern
+	selected = vim.fn.escape(selected, "/\\")
+	-- Prompt for replacement text
+	local replacement = vim.fn.input("Replace '" .. selected .. "' with: ")
+	if replacement ~= "" then
+		-- Perform replacement in entire file
+		vim.cmd("%s/" .. selected .. "/" .. replacement .. "/g")
+	end
+end, { desc = "Replace selected text in file" })
+
+-- Alternative: Replace only in visual selection
+keymap("v", "<leader>R", function()
+	vim.cmd('noau normal! "vy"')
+	local selected = vim.fn.getreg("v")
+	selected = vim.fn.escape(selected, "/\\")
+	local replacement = vim.fn.input("Replace '" .. selected .. "' with (in selection): ")
+	if replacement ~= "" then
+		-- '<,'> is automatically added for visual range
+		vim.cmd("'<,'>s/" .. selected .. "/" .. replacement .. "/g")
+	end
+end, { desc = "Replace selected text in selection" })
+
+-- Replace only in visual selection (with confirmation)
+keymap("v", "<leader>rs", function()
+	vim.cmd('noau normal! "vy"')
+	local selected = vim.fn.getreg("v")
+	selected = vim.fn.escape(selected, "/\\")
+	local replacement = vim.fn.input("Replace '" .. selected .. "' with (in selection): ")
+	if replacement ~= "" then
+		-- '<,'> is automatically added for visual range
+		vim.cmd("'<,'>s/" .. selected .. "/" .. replacement .. "/gc")
+	end
+end, { desc = "Replace selected text in selection (confirm each)" })
+
+-- For post-search replacement with * (normal mode, with confirmation)
+keymap("n", "<leader>r", function()
+	local replacement = vim.fn.input("Replace search pattern with: ")
+	if replacement ~= "" then
+		vim.cmd("%s//" .. replacement .. "/gc")
+	end
+end, { desc = "Replace last search pattern (confirm each)" })
+
+-- For post-search replacement with * (normal mode, replace all)
+keymap("n", "<leader>R", function()
+	local replacement = vim.fn.input("Replace search pattern with (all): ")
+	if replacement ~= "" then
+		vim.cmd("%s//" .. replacement .. "/g")
+	end
+end, { desc = "Replace last search pattern (replace all)" })
