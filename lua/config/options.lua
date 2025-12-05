@@ -60,4 +60,4 @@ vim.g.lazyvim_python_lsp = "pyrefly"
 vim.g.lazyvim_python_ruff = "ruff"
 
 -- Disable swap files entirely
-vim.opt.swapfile = false
+-- vim.opt.swapfile = false
