@@ -6,4 +6,3 @@ def add(a):
         return b
 
 print(add(3))
-
