@@ -4,7 +4,7 @@ return {
 		"neovim/nvim-lspconfig",
 		"mfussenegger/nvim-dap-python",
 	},
-	branch = "regexp",
+	-- branch = "regexp",
 	lazy = false,
 	opts = {
 		settings = {
