@@ -1,19 +1,24 @@
+-- ~/.config/nvim/lua/plugins/treesitter-textobjects.lua
 return {
 	"nvim-treesitter/nvim-treesitter-textobjects",
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter",
-	},
-	config = function()
-		require("nvim-treesitter-textobjects").setup({
+
+	-- Make sure the core parser plugin is loaded first
+	dependencies = { "nvim-treesitter/nvim-treesitter" },
+
+	-- Load when any buffer that uses treesitter is opened
+	event = { "BufReadPost", "BufNewFile" },
+
+	-- **Tell lazy NOT to call the default `setup`**
+	config = false,
+
+	-- Provide our own config that forwards the table to the core plugin
+	opts = function()
+		return {
 			textobjects = {
 				select = {
 					enable = true,
-
-					-- Automatically jump forward to textobj, similar to targets.vim
 					lookahead = true,
-
 					keymaps = {
-						-- You can use the capture groups defined in textobjects.scm
 						["af"] = "@function.outer",
 						["if"] = "@function.inner",
 						["ac"] = "@class.outer",
@@ -22,12 +27,13 @@ return {
 						["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
 					},
 					selection_modes = {
-						["@parameter.outer"] = "v", -- charwise
-						["@function.outer"] = "V", -- linewise
-						["@class.outer"] = "<c-v>", -- blockwise
+						["@parameter.outer"] = "v",
+						["@function.outer"] = "V",
+						["@class.outer"] = "<c-v>",
 					},
 					include_surrounding_whitespace = true,
 				},
+
 				swap = {
 					enable = true,
 					swap_next = {
@@ -37,7 +43,27 @@ return {
 						["<leader>A"] = "@parameter.inner",
 					},
 				},
+
+				move = {
+					enable = true,
+					set_jumps = true,
+					goto_next_start = {
+						["]f"] = "@function.outer",
+						["]c"] = "@class.outer",
+					},
+					goto_previous_start = {
+						["[f"] = "@function.outer",
+						["[c"] = "@class.outer",
+					},
+				},
 			},
-		})
+		}
+	end,
+
+	-- This is the *only* place we call `setup`
+	config = function(_, opts)
+		-- The core plugin will merge this into its own config if it has already
+		-- been loaded; otherwise we load it now.
+		require("nvim-treesitter.configs").setup(opts)
 	end,
 }
