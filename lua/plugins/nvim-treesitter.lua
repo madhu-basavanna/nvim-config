@@ -1,31 +1,38 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
+	"neovim-treesitter/nvim-treesitter",
+	dependencies = { "neovim-treesitter/treesitter-parser-registry" },
+	lazy = false,
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter").setup({
-			ensure_installed = {
-				"lua",
-				"python",
-				"dockerfile",
-				"vim",
-				"vimdoc",
-				"bash",
-				"diff",
-				"luadoc",
-			},
-			sync_install = false,
-			highlight = { enable = true },
-			indent = { enable = true },
+		-- 1. Setup the core plugin
+		require("nvim-treesitter").setup()
 
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<Enter>",
-					node_incremental = "<Enter>",
-					scope_incremental = false,
-					node_decremental = "<Backspace>",
-				},
-			},
+		-- 2. Install your chosen language parsers
+		require("nvim-treesitter").install({
+			"lua",
+			"python",
+			"dockerfile",
+			"vim",
+			"vimdoc",
+			"bash",
+			"diff",
+			"luadoc",
+		})
+
+		-- 3. Core runtime configuration via Autocommands
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "lua", "python", "dockerfile", "vim", "bash", "diff" },
+			callback = function()
+				-- Enables syntax highlighting & activates textobjects matching
+				vim.treesitter.start()
+
+				-- Enables Tree-sitter powered indentation
+				vim.bo.indentexpr = "v:lua.vim.treesitter.foldexpr()"
+
+				-- Enables Tree-sitter powered code folding
+				vim.wo.foldmethod = "expr"
+				vim.wo.foldexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
 		})
 	end,
 }
