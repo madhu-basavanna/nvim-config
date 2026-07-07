@@ -2,11 +2,8 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
 	config = function()
-		local configs = require("nvim-treesitter.configs")
-
-		configs.setup({
+		require("nvim-treesitter").setup({
 			ensure_installed = {
-				"c",
 				"lua",
 				"python",
 				"dockerfile",
@@ -14,10 +11,7 @@ return {
 				"vimdoc",
 				"bash",
 				"diff",
-				"html",
 				"luadoc",
-				"markdown",
-				"markdown_inline",
 			},
 			sync_install = false,
 			highlight = { enable = true },
@@ -26,7 +20,7 @@ return {
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "<Enter>", -- set to `false` to disable one of the mappings
+					init_selection = "<Enter>",
 					node_incremental = "<Enter>",
 					scope_incremental = false,
 					node_decremental = "<Backspace>",
