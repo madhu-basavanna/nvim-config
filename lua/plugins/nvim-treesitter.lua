@@ -17,6 +17,8 @@ return {
 			"bash",
 			"diff",
 			"luadoc",
+			"markdown",
+			"markdown_inline",
 		})
 
 		-- 3. Core runtime configuration via Autocommands
